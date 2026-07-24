@@ -1,0 +1,34 @@
+from settings import *
+from sprites import *
+
+
+
+class Game():
+    def __init__(self):
+        pygame.init()
+        self.display_surface=pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT))
+        pygame.display.set_caption("Pong")
+        self.clock=pygame.time.Clock()
+        self.running=True
+        self.all_sprites=pygame.sprite.Group()
+        self.paddle_sprites=pygame.sprite.Group()
+
+
+    def run(self):
+       
+        while self.running:
+            dt=self.clock.tick()/1000
+            for event in pygame.event.get():
+                if event.type==pygame.QUIT:
+                    self.running=False
+                #update
+
+                #draw
+                self.display_surface.fill(COLORS.get('bg'))
+                pygame.display.update()
+        pygame.QUIT
+
+
+if __name__=="__main__":
+    game=Game()
+    game.run()
