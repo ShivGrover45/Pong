@@ -12,6 +12,7 @@ class Game():
         self.running=True
         self.all_sprites=pygame.sprite.Group()
         self.paddle_sprites=pygame.sprite.Group()
+        self.player=Players((self.paddle_sprites,self.all_sprites))
 
 
     def run(self):
@@ -25,6 +26,7 @@ class Game():
 
                 #draw
                 self.display_surface.fill(COLORS.get('bg'))
+                self.all_sprites.draw(self.display_surface)
                 pygame.display.update()
         pygame.QUIT
 
