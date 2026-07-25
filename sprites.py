@@ -29,7 +29,7 @@ class Ball(pygame.sprite.Sprite):
     def __init__(self,groups,paddle_sprites,pos):
         super().__init__(groups)
         self.image=pygame.surface.Surface(SIZE['ball'],pygame.SRCALPHA)
-        pygame.draw.circle(self.image,COLORS['ball'],(10,10),10)
+        pygame.draw.circle(self.image,COLORS['ball'],(SIZE['ball'][0]/2,SIZE['ball'][0]/2),15)
         self.rect=self.image.get_frect(center=pos)
         self.direction=pygame.Vector2(choice((1,-1)),uniform(0.7,0.8)*choice((1,-1)))
         self.speed=SPEED['ball']
