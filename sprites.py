@@ -1,5 +1,5 @@
 from settings import *
-
+from random import choice,uniform
 class Players(pygame.sprite.Sprite):
     def __init__(self,groups):
         super().__init__(groups)
@@ -28,8 +28,22 @@ class Players(pygame.sprite.Sprite):
 class Ball(pygame.sprite.Sprite):
     def __init__(self,groups,paddle_sprites,pos):
         super().__init__(groups)
-        self.image=pygame.surface.Surface(SIZE['ball'])
-        self.image.fill(COLORS['ball'])
+        self.image=pygame.surface.Surface(SIZE['ball'],pygame.SRCALPHA)
+        pygame.draw.circle(self.image,COLORS['ball'],(10,10),10)
         self.rect=self.image.get_frect(center=pos)
+        self.direction=pygame.Vector2(choice((1,-1)),uniform(0.7,0.8)*choice((1,-1)))
+        self.speed=SPEED['ball']
+    def move(self,dt):
+        self.rect.center+=self.direction*self.speed*dt
+    def wall_collision(self):
+        if self.rect.top<0:
+            self.rect.top=0
+            self.direction.y=-1
+        if self.rect.bottom>WINDOW_HEIGHT:
+            self.rect.bottom=WINDOW_HEIGHT
+            self.direction.y=1
+    def update(self,dt):
+        self.move(dt)
+        self.wall_collision()
 
 
