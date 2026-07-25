@@ -23,11 +23,11 @@ class Game():
                 if event.type==pygame.QUIT:
                     self.running=False
                 #update
-
+            self.all_sprites.update(dt)
                 #draw
-                self.display_surface.fill(COLORS.get('bg'))
-                self.all_sprites.draw(self.display_surface)
-                pygame.display.update()
+            self.display_surface.fill(COLORS.get('bg'))
+            self.all_sprites.draw(self.display_surface)
+            pygame.display.update()
         pygame.QUIT
 
 
