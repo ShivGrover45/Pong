@@ -1,6 +1,8 @@
 from settings import *
 from random import choice,uniform
-class Players(pygame.sprite.Sprite):
+
+
+class Paddle(pygame.sprite.Sprite):
     def __init__(self,groups):
         super().__init__(groups)
         #image 
@@ -19,6 +21,10 @@ class Players(pygame.sprite.Sprite):
         self.rect.centery+=self.direction*self.speed*dt
         self.rect.top=0 if self.rect.top<0 else self.rect.top
         self.rect.bottom=WINDOW_HEIGHT if self.rect.bottom>WINDOW_HEIGHT else self.rect.bottom
+class Players(Paddle):
+    def __init(self,groups):
+        super().__init__(groups)
+
     def get_direction(self):
         keys=pygame.key.get_pressed()
         self.direction=int(keys[pygame.K_DOWN])-int(keys[pygame.K_UP])
@@ -42,6 +48,7 @@ class Ball(pygame.sprite.Sprite):
         self.rect.x+=self.direction.x*self.speed*dt
         self.player_collision('horizontal')
         self.rect.y+=self.direction.y*self.speed*dt
+        self.player_collision('vertical')
     def wall_collision(self):
         if self.rect.top<0:
             self.rect.top=0
@@ -58,9 +65,23 @@ class Ball(pygame.sprite.Sprite):
     def player_collision(self,direction):
         for sprite in self.paddle_sprites:
             if sprite.rect.colliderect(self.rect):
-                if self.rect.right>sprite.rect.left and self.old_rect.right<=self.old_rect.right:
-                    self.rect.right=sprite.rect.left
-                    self.direction.x*=-1
+                if direction=='horizontal':
+                     if self.rect.right>sprite.rect.left and self.old_rect.right<=sprite.old_rect.left:
+                        self.rect.right=sprite.rect.left
+                        self.direction.x*=-1
+                     if self.rect.left<sprite.rect.right and self.old_rect.left>=sprite.old_rect.right:
+                         self.rect.left=sprite.rect.right
+                         self.direction.x*=-1
+                       
+                else:
+                    if self.rect.bottom>=sprite.rect.top and self.old_rect.bottom<=sprite.old_rect.top:
+                        self.rect.bottom=sprite.rect.top
+                        self.direction.y*=-1
+                    if self.rect.top<=sprite.rect.bottom and self.old_rect.top>=sprite.old_rect.bottom:
+                        self.rect.top=self.rect.bottom
+                        self.direction.y*=1
+
+            
 
     def update(self,dt):
         self.old_rect=self.rect.copy()
