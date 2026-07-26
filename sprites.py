@@ -10,6 +10,7 @@ class Players(pygame.sprite.Sprite):
 
         #rect
         self.rect=self.image.get_frect(center=POS['player'])
+        self.old_rect=self.rect.copy()
         self.direction=0
         self.speed=SPEED.get('player')
 
@@ -22,19 +23,25 @@ class Players(pygame.sprite.Sprite):
         keys=pygame.key.get_pressed()
         self.direction=int(keys[pygame.K_DOWN])-int(keys[pygame.K_UP])
     def update(self,dt):
+        self.old_rect=self.rect.copy()
         self.get_direction()
         self.run(dt)
         
 class Ball(pygame.sprite.Sprite):
     def __init__(self,groups,paddle_sprites,pos):
         super().__init__(groups)
+        self.paddle_sprites=paddle_sprites
         self.image=pygame.surface.Surface(SIZE['ball'],pygame.SRCALPHA)
         pygame.draw.circle(self.image,COLORS['ball'],(SIZE['ball'][0]/2,SIZE['ball'][0]/2),15)
         self.rect=self.image.get_frect(center=pos)
+        self.old_rect=self.rect.copy()
+        
         self.direction=pygame.Vector2(choice((1,-1)),uniform(0.7,0.8)*choice((1,-1)))
         self.speed=SPEED['ball']
     def move(self,dt):
-        self.rect.center+=self.direction*self.speed*dt
+        self.rect.x+=self.direction.x*self.speed*dt
+        self.player_collision('horizontal')
+        self.rect.y+=self.direction.y*self.speed*dt
     def wall_collision(self):
         if self.rect.top<0:
             self.rect.top=0
@@ -48,9 +55,15 @@ class Ball(pygame.sprite.Sprite):
         if self.rect.right>WINDOW_WIDTH:
             self.rect.right=WINDOW_WIDTH
             self.direction.x*=-1
-    def player_collision():
-        pass
+    def player_collision(self,direction):
+        for sprite in self.paddle_sprites:
+            if sprite.rect.colliderect(self.rect):
+                if self.rect.right>sprite.rect.left and self.old_rect.right<=self.old_rect.right:
+                    self.rect.right=sprite.rect.left
+                    self.direction.x*=-1
+
     def update(self,dt):
+        self.old_rect=self.rect.copy()
         self.move(dt)
         self.wall_collision()
 
