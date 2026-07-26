@@ -14,7 +14,9 @@ class Game():
         self.paddle_sprites=pygame.sprite.Group()
         self.player=Players((self.paddle_sprites,self.all_sprites))
         self.ball=Ball(self.all_sprites,self.paddle_sprites,(640,360))
-        self.opponent=Opponents(self.all_sprites,self.ball)
+        Opponents((self.all_sprites,self.paddle_sprites),self.ball)
+        self.score={'player':0,'opponent':0}
+        self.font=pygame.font.Font(None,160)
 
 
     def run(self):
@@ -28,9 +30,16 @@ class Game():
             self.all_sprites.update(dt)
                 #draw
             self.display_surface.fill(COLORS.get('bg'))
+            self.display_score()
             self.all_sprites.draw(self.display_surface)
             pygame.display.update()
         pygame.QUIT
+
+    def display_score(self):
+        #player score
+        player_surf=self.font.render(str(self.score['player']),True,COLORS['bg detail'])
+        player_surf_rect=player_surf.get_frect(center=(WINDOW_WIDTH/2+100,WINDOW_HEIGHT/2))
+        self.display_surface.blit(player_surf,player_surf_rect)
 
 
 if __name__=="__main__":

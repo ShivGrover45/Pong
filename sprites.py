@@ -6,13 +6,13 @@ class Paddle(pygame.sprite.Sprite):
     def __init__(self,groups):
         super().__init__(groups)
         #image 
-        self.image=pygame.Surface(SIZE['paddle'])
-        self.image.fill(COLORS['paddle'])
+        self.image=pygame.Surface(SIZE['paddle'],pygame.SRCALPHA)
+        pygame.draw.rect(self.image,COLORS['paddle'],pygame.FRect((0,0),SIZE['paddle']),0,4)
 
 
         #rect
         self.rect=self.image.get_frect(center=POS['player'])
-        self.speed=SPEED['player']
+        #self.speed=SPEED['player']
         self.old_rect=self.rect.copy()
         self.direction=0
         
@@ -23,11 +23,11 @@ class Paddle(pygame.sprite.Sprite):
         self.rect.top=0 if self.rect.top<0 else self.rect.top
         self.rect.bottom=WINDOW_HEIGHT if self.rect.bottom>WINDOW_HEIGHT else self.rect.bottom
     def update(self,dt):
-            self.old_rect=self.rect.copy()
-            self.get_direction()
-            self.run(dt)
+        self.old_rect=self.rect.copy()
+        self.get_direction()
+        self.run(dt)
 class Players(Paddle):
-    def __init(self,groups):
+    def __init__(self,groups):
         super().__init__(groups)
         self.speed=SPEED['player']
 
