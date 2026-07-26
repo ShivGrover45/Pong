@@ -10,7 +10,7 @@ POS = {'player': (WINDOW_WIDTH - 50, WINDOW_HEIGHT / 2), 'opponent': (50, WINDOW
 
 SPEED={
     'player':500,
-    'opponent':450,
+    'opponent':350,
     'ball':400
 }
 
