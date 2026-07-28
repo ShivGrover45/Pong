@@ -1,6 +1,6 @@
 from settings import *
 from random import choice,uniform
-
+import json
 
 class Paddle(pygame.sprite.Sprite):
     def __init__(self,groups):
