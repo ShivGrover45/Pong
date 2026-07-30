@@ -15,7 +15,7 @@ class Game():
         self.player=Players((self.paddle_sprites,self.all_sprites))
         self.ball=Ball(self.all_sprites,self.paddle_sprites,(640,360),self.update_score)
         Opponents((self.all_sprites,self.paddle_sprites),self.ball)
-        
+        self.score={'player':0,'opponent':0}
         self.font=pygame.font.Font(None,160)
         try:
             with open(join('../data','scores.txt')) as score_file:
@@ -58,6 +58,15 @@ class Game():
         pygame.draw.line(self.display_surface,COLORS['bg detail'],(WINDOW_WIDTH/2,0),(WINDOW_WIDTH/2,WINDOW_HEIGHT),3)
     def update_score(self,side):
         self.score['player' if side=='player' else 'opponent']+=1
+        if self.score[side]==5:
+            self.result_screen(side)
+    def result_screen(self,side):
+        if side=='opponent':
+            pass
+        elif side=='player':
+            pass
+
+
 if __name__=="__main__":
     game=Game()
     game.run()
