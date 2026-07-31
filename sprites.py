@@ -84,6 +84,7 @@ class Ball(pygame.sprite.Sprite):
         self.rect.center=(WINDOW_WIDTH/2,WINDOW_HEIGHT/2)
         self.direction=pygame.Vector2(choice((1,-1)),uniform(0.7,0.8)*choice((1,-1)))
         self.start_time=pygame.time.get_ticks()
+        self.speed_modifier=0
     def player_collision(self,direction):
         for sprite in self.paddle_sprites:
             if sprite.rect.colliderect(self.rect):
@@ -101,7 +102,7 @@ class Ball(pygame.sprite.Sprite):
                         self.direction.y*=-1
                     if self.rect.top<=sprite.rect.bottom and self.old_rect.top>=sprite.old_rect.bottom:
                         self.rect.top=self.rect.bottom
-                        self.direction.y*=1
+                        self.direction.y*=-1
 
     def timer(self):
         if pygame.time.get_ticks()-self.start_time>=self.duration:
