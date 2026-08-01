@@ -104,7 +104,7 @@ class Ball(pygame.sprite.Sprite):
                         self.rect.bottom=sprite.rect.top
                         self.direction.y*=-1
                     if self.rect.top<=sprite.rect.bottom and self.old_rect.top>=sprite.old_rect.bottom:
-                        self.rect.top=self.rect.bottom
+                        self.rect.top=sprite.rect.bottom
                         self.direction.y*=-1
 
     def timer(self):
