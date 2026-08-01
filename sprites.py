@@ -46,14 +46,14 @@ class Opponents(Paddle):
      difference = self.ball.rect.centery - self.rect.centery
 
      if self.ball.direction.x < 0:        # Ball coming toward AI
-        if abs(difference) < 8:
+        if abs(difference) < 9:
             self.direction = 0
         else:
-            self.direction = max(-1, min(1, difference / 115))
+            self.direction = max(-1, min(1, difference / 116))
      else:
         # Return toward the center
         difference = WINDOW_HEIGHT / 2 - self.rect.centery
-        self.direction = max(-1, min(1, difference / 115))
+        self.direction = max(-1, min(1, difference / 116))
 class Ball(pygame.sprite.Sprite):
     def __init__(self,groups,paddle_sprites,pos,update_score):
         super().__init__(groups)

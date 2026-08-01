@@ -67,7 +67,11 @@ class Game():
             self.display_surface.blit(title,title_rect)
             self.display_surface.blit(play_game, play_game_rect)
             self.display_surface.blit(esc_game, esc_game_rect)
-
+            keys=pygame.key.get_just_pressed()
+            if keys[pygame.K_SPACE]:
+                self.state='playing'
+            elif keys[pygame.K_ESCAPE]:
+                self.running=False
     def display_score(self):
         #player score
         player_surf=self.font.render(str(self.score['player']),True,COLORS['bg detail'])
