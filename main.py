@@ -6,17 +6,24 @@ from sprites import *
 class Game():
     def __init__(self):
         pygame.init()
+        #game mode 
         self.display_surface=pygame.display.set_mode((WINDOW_WIDTH,WINDOW_HEIGHT))
         pygame.display.set_caption("Pong")
+
         self.clock=pygame.time.Clock()
         self.running=True
+        #grouping sprites 
         self.all_sprites=pygame.sprite.Group()
         self.paddle_sprites=pygame.sprite.Group()
         self.player=Players((self.paddle_sprites,self.all_sprites))
         self.ball=Ball(self.all_sprites,self.paddle_sprites,(640,360),self.update_score)
         Opponents((self.all_sprites,self.paddle_sprites),self.ball)
+        #Player and opponents score
         self.score={'player':0,'opponent':0}
         self.font=pygame.font.Font(None,160)
+        self.state='menu'
+        self.title_font=pygame.font.Font(None,80)
+        self.menu_font=pygame.font.Font(None,40)
         try:
             with open(join('../data','scores.txt')) as score_file:
                 json.load(score_file)
@@ -33,15 +40,33 @@ class Game():
                     self.running=False
             with open(join('../data','scores.txt'),'w') as score_file:
                 json.dump(self.score,score_file)
-                
+
+            #drawing main menu for the game
+            if self.state=='menu':
+                self.main_menu()
                 #update
-            self.all_sprites.update(dt)
+            elif self.state=='playing':
+                  self.all_sprites.update(dt)
                 #draw
-            self.display_surface.fill(COLORS.get('bg'))
-            self.display_score()
-            self.all_sprites.draw(self.display_surface)
+                  self.display_surface.fill(COLORS.get('bg'))
+                  self.display_score()
+                  self.all_sprites.draw(self.display_surface)
             pygame.display.update()
         pygame.QUIT
+    def main_menu(self):
+        if self.state=='menu':
+            #displaying title of the game
+            self.display_surface.fill(COLORS['bg'])
+            title=self.title_font.render("PONG",True,COLORS['paddle'])
+            title_rect=title.get_frect(center=(WINDOW_WIDTH//2, WINDOW_HEIGHT//4))
+            #Menu options for the game
+            play_game=self.menu_font.render("Press Space to start",True,COLORS['menu title'])
+            play_game_rect=play_game.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2))
+            esc_game=self.menu_font.render("Press ESC to quit",True,COLORS['menu title'])
+            esc_game_rect=esc_game.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2+60))
+            self.display_surface.blit(title,title_rect)
+            self.display_surface.blit(play_game, play_game_rect)
+            self.display_surface.blit(esc_game, esc_game_rect)
 
     def display_score(self):
         #player score

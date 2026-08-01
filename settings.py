@@ -20,5 +20,6 @@ COLORS = {
     'ball': '#ee622c',
     'ball shadow': '#c14f24',
     'bg': '#002633',
-    'bg detail':'#004a63'
+    'bg detail':'#004a63',
+    'menu title':'#FAEBD7'
 }

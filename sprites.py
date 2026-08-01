@@ -40,17 +40,20 @@ class Opponents(Paddle):
         super().__init__(groups)
         self.rect.center=POS['opponent']
         self.speed=SPEED['opponent']
-        self.threshhold=0.13*WINDOW_HEIGHT
         self.ball=ball
         
     def get_direction(self):
-        difference = self.ball.rect.centery - self.rect.centery
-        if difference>self.threshhold :
-            self.direction=1
-        elif difference<-self.threshhold:
-            self.direction=-1
+     difference = self.ball.rect.centery - self.rect.centery
+
+     if self.ball.direction.x < 0:        # Ball coming toward AI
+        if abs(difference) < 8:
+            self.direction = 0
         else:
-            self.direction=0
+            self.direction = max(-1, min(1, difference / 115))
+     else:
+        # Return toward the center
+        difference = WINDOW_HEIGHT / 2 - self.rect.centery
+        self.direction = max(-1, min(1, difference / 115))
 class Ball(pygame.sprite.Sprite):
     def __init__(self,groups,paddle_sprites,pos,update_score):
         super().__init__(groups)
