@@ -126,7 +126,7 @@ class Game():
                     result_rect=result.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//4))
                     label=self.menu_font.render('Final Score',True,COLORS['menu title'])
                     label_rect=label.get_frect(center=(WINDOW_WIDTH//2, 300))
-                    score=self.score_font.render(f"{self.score['Player']}-{self.score['opponent']}",True,COLORS['menu title'])
+                    score=self.score_font.render(f"{self.score['player']}-{self.score['opponent']}",True,COLORS['menu title'])
                     score_rect=score.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2))
                     continuation=self.menu_font.render('Press Space Bar to play again',True,COLORS.get('menu title'))
                     continuation_rect=continuation.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2+40))
