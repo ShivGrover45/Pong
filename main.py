@@ -24,6 +24,8 @@ class Game():
         self.state='menu'
         self.title_font=pygame.font.Font(None,80)
         self.menu_font=pygame.font.Font(None,40)
+        self.result_font=pygame.font.Font(None,80)
+        self.score_font=pygame.font.Font(None,60)
         try:
             with open(join('../data','scores.txt')) as score_file:
                 json.load(score_file)
@@ -51,6 +53,8 @@ class Game():
                   self.display_surface.fill(COLORS.get('bg'))
                   self.display_score()
                   self.all_sprites.draw(self.display_surface)
+            elif self.state=='game-over':
+                self.result_screen()
             pygame.display.update()
         pygame.QUIT
     def main_menu(self):
@@ -88,11 +92,12 @@ class Game():
     def update_score(self,side):
         self.score['player' if side=='player' else 'opponent']+=1
         if self.score[side]==5:
-            self.result_screen(side)
-    def result_screen(self,side):
-        if side=='opponent':
+            self.winnner=side
+            self.state='game-over'
+    def result_screen(self):
+        if self.winnner=='opponent':
             pass
-        elif side=='player':
+        elif self.winnner=='player':
             pass
 
 
