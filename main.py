@@ -22,6 +22,7 @@ class Game():
         self.score={'player':0,'opponent':0}
         self.font=pygame.font.Font(None,160)
         self.state='menu'
+        #Font for different screens like Main menu Result Screen and Pause Menu
         self.title_font=pygame.font.Font(None,80)
         self.menu_font=pygame.font.Font(None,40)
         self.result_font=pygame.font.Font(None,80)
@@ -92,11 +93,29 @@ class Game():
     def update_score(self,side):
         self.score['player' if side=='player' else 'opponent']+=1
         if self.score[side]==5:
-            self.winnner=side
+            self.winner=side
             self.state='game-over'
     def result_screen(self):
-        if self.winnner=='opponent':
-            pass
+        keys=pygame.key.get_just_pressed()
+        if self.winner=='opponent':
+            result=self.result_font.render("You Lost! Asshole",True,COLORS['menu title'])
+            result_rect=result.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//4))
+            label=self.menu_font.render('Final Score',True,COLORS['menu title'])
+            label_rect=label.get_frect(center=(WINDOW_WIDTH//2, 300))
+            score=self.score_font.render(f"{self.score['opponent']}-{self.score['player']}",True,COLORS['menu title'])
+            score_rect=score.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2))
+            continuation=self.menu_font.render()
+            escape=self.menu_font.render()
+            if keys[pygame.K_SPACE]:
+                self.reset_game()
+                self.state='playing'
+            elif keys[pygame.K_ESCAPE]:
+                self.state='menu'
+            self.display_surface.fill(COLORS["bg"])
+
+            self.display_surface.blit(result, result_rect)
+            self.display_surface.blit(label, label_rect)
+            self.display_surface.blit(score, score_rect)
         elif self.winnner=='player':
             pass
 
