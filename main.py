@@ -145,6 +145,12 @@ class Game():
                     self.display_surface.blit(continuation,continuation_rect)
                     self.display_surface.blit(escape,escape_rect)
     def reset_game(self):
+         self.score['player']=0
+         self.score['opponent']=0
+         self.player.rect.center=POS['player']
+         self.opponent.rect.center=POS['opponent']
+         self.ball.reset()
+         self.winner=None
          
             
 
