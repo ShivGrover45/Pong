@@ -17,7 +17,7 @@ class Game():
         self.paddle_sprites=pygame.sprite.Group()
         self.player=Players((self.paddle_sprites,self.all_sprites))
         self.ball=Ball(self.all_sprites,self.paddle_sprites,(640,360),self.update_score)
-        Opponents((self.all_sprites,self.paddle_sprites),self.ball)
+        self.opponent=Opponents((self.all_sprites,self.paddle_sprites),self.ball)
         #Player and opponents score
         self.score={'player':0,'opponent':0}
         self.font=pygame.font.Font(None,160)
@@ -144,6 +144,8 @@ class Game():
                     self.display_surface.blit(score, score_rect)
                     self.display_surface.blit(continuation,continuation_rect)
                     self.display_surface.blit(escape,escape_rect)
+    def reset_game(self):
+         
             
 
 
