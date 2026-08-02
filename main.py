@@ -1,8 +1,5 @@
 from settings import *
 from sprites import *
-
-
-
 class Game():
     def __init__(self):
         pygame.init()
@@ -27,11 +24,6 @@ class Game():
         self.menu_font=pygame.font.Font(None,40)
         self.result_font=pygame.font.Font(None,80)
         self.score_font=pygame.font.Font(None,60)
-        try:
-            with open(join('../data','scores.txt')) as score_file:
-                json.load(score_file)
-        except:
-            self.score={'player':0,'opponent':0}
 
 
     def run(self):
@@ -41,8 +33,6 @@ class Game():
             for event in pygame.event.get():
                 if event.type==pygame.QUIT:
                     self.running=False
-            with open(join('../data','scores.txt'),'w') as score_file:
-                json.dump(self.score,score_file)
 
             #drawing main menu for the game
             if self.state=='menu':
