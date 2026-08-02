@@ -104,8 +104,10 @@ class Game():
             label_rect=label.get_frect(center=(WINDOW_WIDTH//2, 300))
             score=self.score_font.render(f"{self.score['opponent']}-{self.score['player']}",True,COLORS['menu title'])
             score_rect=score.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2))
-            continuation=self.menu_font.render()
-            escape=self.menu_font.render()
+            continuation=self.menu_font.render('Press Space Bar to play again',True,COLORS.get('menu title'))
+            continuation_rect=continuation.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2+40))
+            escape=self.menu_font.render('Press ESC to escape to Main Menu',True,COLORS['menu title'])
+            escape_rect=escape.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2+100))
             if keys[pygame.K_SPACE]:
                 self.reset_game()
                 self.state='playing'
@@ -116,8 +118,33 @@ class Game():
             self.display_surface.blit(result, result_rect)
             self.display_surface.blit(label, label_rect)
             self.display_surface.blit(score, score_rect)
-        elif self.winnner=='player':
-            pass
+            self.display_surface.blit(continuation,continuation_rect)
+            self.display_surface.blit(escape,escape_rect)
+        elif self.winner=='player':
+            
+                    result=self.result_font.render("You Won!",True,COLORS['menu title'])
+                    result_rect=result.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//4))
+                    label=self.menu_font.render('Final Score',True,COLORS['menu title'])
+                    label_rect=label.get_frect(center=(WINDOW_WIDTH//2, 300))
+                    score=self.score_font.render(f"{self.score['Player']}-{self.score['opponent']}",True,COLORS['menu title'])
+                    score_rect=score.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2))
+                    continuation=self.menu_font.render('Press Space Bar to play again',True,COLORS.get('menu title'))
+                    continuation_rect=continuation.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2+40))
+                    escape=self.menu_font.render('Press ESC to escape to Main Menu',True,COLORS['menu title'])
+                    escape_rect=escape.get_frect(center=(WINDOW_WIDTH//2,WINDOW_HEIGHT//2+100))
+                    if keys[pygame.K_SPACE]:
+                            self.reset_game()
+                            self.state='playing'
+                    elif keys[pygame.K_ESCAPE]:
+                            self.state='menu'
+                    self.display_surface.fill(COLORS["bg"])
+            
+                    self.display_surface.blit(result, result_rect)
+                    self.display_surface.blit(label, label_rect)
+                    self.display_surface.blit(score, score_rect)
+                    self.display_surface.blit(continuation,continuation_rect)
+                    self.display_surface.blit(escape,escape_rect)
+            
 
 
 if __name__=="__main__":
